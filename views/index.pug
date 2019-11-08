@@ -1,0 +1,39 @@
+extends layout.pug
+
+block header
+	link(rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="")
+	script(src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin="")
+	script(src="/js/L.Control.Window.js")
+	link(rel="stylesheet" href="/css/L.Control.Window.css")
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")
+	script.
+		$(function () {
+			$(document).ready(function() {
+				var map = L.map('mapid').setView([55.0253, 82.9379], 11);
+				L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+					attribution: '&copy; <a href="https://www.tsumo.ru/">Tsumo</a>'
+				}).addTo(map);
+				var icon = L.icon({
+					iconUrl: '/img/chun.png'
+				});
+				$.getJSON('https://irl.tsumo.ru/api?query={places{records{city name address longitude latitude}}}',function(res) {
+					$.each(res.data.places.records, function(i, val) {
+						var marker = L.marker([val.latitude, val.longitude],{
+							icon: icon,
+							title: val.name
+						}).addTo(map);
+						marker.on('click',function(){
+							var str = `<b>Адрес:</b> <i>${val.city}, ${val.address}</i>`;
+							var win =  L.control.window(map,{title:'Место встречи "' + val.name + '"', maxWidth:400,modal: true})
+								.content(str)
+								.show()
+							});
+					});
+				});
+			});
+		});	
+block content
+	h1 Карта игровых встреч бота @TsumoIRLbot
+	p(align="center")
+		a(href="/manual") Справка по боту
+	div#mapid(style="height: 90%; width: 100%; border: 1px solid black;")

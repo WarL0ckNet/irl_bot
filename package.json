@@ -1,0 +1,37 @@
+{
+  "name": "irl",
+  "version": "1.0.0",
+  "description": "Tsumo IRL bot site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "WarL0ck",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "*",
+    "cli-color": "*",
+    "connect-flash": "*",
+    "cookie-parser": "*",
+    "cookie-session": "*",
+    "express": "*",
+    "express-graphql": "*",
+    "express-session": "*",
+    "file-stream-rotator": "*",
+    "graphql": "*",
+    "graphql-iso-date": "*",
+    "knex": "*",
+    "method-override": "*",
+    "moment": "*",
+    "moment-timezone": "*",
+    "morgan": "*",
+    "nodemailer": "*",
+    "numeral": "*",
+    "objection": "*",
+    "pg": "*",
+    "pug": "*",
+    "serve-favicon": "*",
+    "telebot": "*",
+    "wsrpc": "^1.4.0"
+  }
+}
